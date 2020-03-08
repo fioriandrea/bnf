@@ -32,7 +32,7 @@ const expand = (rules, axiom) => {
 
 const recursiveExpand = (rules, axiom) => {
   const callback = nonTerminal => {
-    return recursiveExpand(nonTerminal);
+    return recursiveExpand(rules, nonTerminal);
   };
 
   if(!rules[axiom]) { // phrase with nonterminal in or terminal phrase

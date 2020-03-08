@@ -77,6 +77,6 @@ const rules = {
     "#noun#": ["cat", "dog", "monkey", "mouse", "computer", "human"],
 };
 
-console.log(expand(rules, "#axiom#"));
-console.log(recursiveExpand(rules, "#axiom#"));
+console.log(expand(rules, "#phrase#"));
+console.log(recursiveExpand(rules, "#phrase#"));
 ```
