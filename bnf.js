@@ -1,39 +1,11 @@
 //Rules and non-terminals go always between #
 //(e.g "#rule#": "#rule# terminal",)
 
-const rules = {
-  "#axiom#": "[#expr# | #member-list#, #compare-list#]",
-
-  "#expr#": ["#operand# #operation# #expr#", "#operand#", "(#expr#)"],
-  "#operand#": ["#id#", "#num#"],
-  "#operation#": ["+", "*", "-", "/"],
-  "#char#": ["a", "b", "c", "d", "e", "f", "g"],
-  "#id#": ["#char##id#", "#char#"],
-  "#num#": ["#non-zero##num#", "0", "#non-zero#"],
-  "#non-zero#": ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
-
-  "#member-list#": ["#member#, #member-list#", "#member#"],
-  "#member#": "(#id-list#) <- #id#",
-  "#id-list#": ["#id#, #id-list#", "#id#"],
-  "#compare-list#": ["#compare#, #compare-list#", "#compare#"],
-  "#compare#": "#expr# #comp-op# #expr#",
-  "#comp-op#": ["==", ">=", "<=", "/="],
-};
-
-
-  /*"#phrase#": ["#comp-noun# #is-stat#", "#phrase# #that-clause# #is-stat#"],
-  "#comp-noun#": "#art# #noun#",
-  "#is-stat#": "#be# #comp-noun#",
-  "#be#": ["is", "is not", "isn't"],
-  "#that-clause#": ["that", ", which"],
-  "#art#": "a",
-  "#noun#": ["cat", "dog", "monkey", "mouse", "computer", "human"],*/
-
 const nonTerminalRegex = /(#[^#]*#)/g;
 
 const randomElem = array => array[Math.floor(Math.random()*array.length)];
 
-const expand = axiom => {
+const expand = (rules, axiom) => {
   let phrase = axiom;
 
   let splitted = phrase.split(nonTerminalRegex);
@@ -58,9 +30,9 @@ const expand = axiom => {
   return phrase;
 };
 
-const recursiveExpand = axiom => {
+const recursiveExpand = (rules, axiom) => {
   const callback = nonTerminal => {
-    return randomPhrase(nonTerminal);
+    return recursiveExpand(nonTerminal);
   };
 
   if(!rules[axiom]) { // phrase with nonterminal in or terminal phrase
